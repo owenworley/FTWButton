@@ -36,31 +36,31 @@ They are all animatable and transition between states.
 
 ### Example Code
 
-button1 = [[FTWButton alloc] init];
-
-button1.frame = CGRectMake(20, 20, 280, 40);
-[button1 setColors:[NSArray arrayWithObjects:
-			  [UIColor colorWithRed:2.0f/255 green:184.0f/255 blue:255.0f/255 alpha:1.0f],
-			  [UIColor colorWithRed:0.0f/255 green:68.0f/255 blue:255.0f/255 alpha:1.0f],
-			  nil] forControlState:state];
-
-
-[button1 setInnerShadowColor:[UIColor colorWithRed:108.0f/255 green:221.0f/255 blue:253.0f/255 alpha:1.0f] forControlState:UIControlStateNormal];
-[button1 setInnerShadowOffset:CGSizeMake(0, 1) forControlState:UIControlStateNormal];
-
-[button1 setShadowColor:[UIColor blackColor] forControlState:UIControlStateNormal];
-[button1 setShadowOffset:CGSizeMake(0, 1) forControlState:UIControlStateNormal];
-[button1 setShadowOpacity:1.0f forControlState:UIControlStateNormal];
-
-[button1 setTextColor:[UIColor colorWithWhite:1.0f alpha:1.0f] forControlState:UIControlStateNormal];
-[button1 setTextShadowColor:[UIColor colorWithWhite:78.0f/255 alpha:1.0f] forControlState:UIControlStateNormal];
-[button1 setTextShadowOffset:CGSizeMake(0, -1) forControlState:UIControlStateNormal];
-
-[button1 setText:@"Tap me" forControlState:UIControlStateNormal];
-[button1 setText:@"Tapped!" forControlState:UIControlStateSelected];
-
-[button1 addTarget:self action:@selector(buttonTapped:) forControlEvents:UIControlEventTouchUpInside];
-[self.view addSubview:button1];
+	button1 = [[FTWButton alloc] init];
+	
+	button1.frame = CGRectMake(20, 20, 280, 40);
+	[button1 setColors:[NSArray arrayWithObjects:
+				  [UIColor colorWithRed:2.0f/255 green:184.0f/255 blue:255.0f/255 alpha:1.0f],
+				  [UIColor colorWithRed:0.0f/255 green:68.0f/255 blue:255.0f/255 alpha:1.0f],
+				  nil] forControlState:state];
+	
+	
+	[button1 setInnerShadowColor:[UIColor colorWithRed:108.0f/255 green:221.0f/255 blue:253.0f/255 alpha:1.0f] forControlState:UIControlStateNormal];
+	[button1 setInnerShadowOffset:CGSizeMake(0, 1) forControlState:UIControlStateNormal];
+	
+	[button1 setShadowColor:[UIColor blackColor] forControlState:UIControlStateNormal];
+	[button1 setShadowOffset:CGSizeMake(0, 1) forControlState:UIControlStateNormal];
+	[button1 setShadowOpacity:1.0f forControlState:UIControlStateNormal];
+	
+	[button1 setTextColor:[UIColor colorWithWhite:1.0f alpha:1.0f] forControlState:UIControlStateNormal];
+	[button1 setTextShadowColor:[UIColor colorWithWhite:78.0f/255 alpha:1.0f] forControlState:UIControlStateNormal];
+	[button1 setTextShadowOffset:CGSizeMake(0, -1) forControlState:UIControlStateNormal];
+	
+	[button1 setText:@"Tap me" forControlState:UIControlStateNormal];
+	[button1 setText:@"Tapped!" forControlState:UIControlStateSelected];
+	
+	[button1 addTarget:self action:@selector(buttonTapped:) forControlEvents:UIControlEventTouchUpInside];
+	[self.view addSubview:button1];
 	
 You can combine this code and other styles in any way you like.
 
