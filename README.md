@@ -66,11 +66,11 @@ You can combine this code and other styles in any way you like.
 
 ## Built-in Styles
 
-This code is a bit verbose, so we've included several default styles, with colors chosen our designer.
+This code is a bit verbose, so we've included several default styles, with colors chosen by our designer.
 
 These styles are:
 
-* A disabled style (gray gradient background, gray text
+* A disabled style (gray gradient background, gray text)
 * A delete style (red)
 * A gray style
 * A light blue style
@@ -104,4 +104,4 @@ Also, consider a color framework such as [EDColor](https://github.com/thisandaga
 
 ## Demo App
 
-The demo app contains several demos of `FTWButton`, including changing color on selection, border animations, gradient borders, fancy inner shadow, icons, and changing the frame on selection. 
+The demo app contains several demos of `FTWButton`, including changing color on selection, border animations, gradient borders, fancy inner shadows, icons, and changing the frame on selection. 
