@@ -1,5 +1,5 @@
 //
-//  FTWAnimatableGradientButton.h
+//  FTWButton.h
 //  FTW
 //
 //  Created by Soroush Khanlou on 1/26/12.
@@ -12,13 +12,6 @@
 
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
-
-typedef enum {
-	FTWAnimatableGradientButtonStyleDelete = 0,
-	FTWAnimatableGradientButtonStyleCancel,
-	FTWAnimatableGradientButtonStyleDisabled,
-	FTWAnimatableGradientButtonStyleBlue
-} FTWAnimatableGradientButtonStyle;
 
 @interface FTWButton : UIControl
 
@@ -33,8 +26,6 @@ typedef enum {
 - (void) addYellowStyleForState:(UIControlState)state;
 - (void) addBlackStyleForState:(UIControlState)state;
 
-
-
 - (void) setFrame:(CGRect)frame forControlState:(UIControlState)controlState;
 - (CGRect) frameForControlState:(UIControlState)controlState;
 
@@ -43,7 +34,6 @@ typedef enum {
 
 //backrounds
 - (void) setBackgroundColor:(UIColor*)color forControlState:(UIControlState)controlState;
-- (UIColor*) backgroundColorForControlState:(UIControlState)controlState;
 
 - (void) setColors:(NSArray*)colors forControlState:(UIControlState)controlState;
 - (NSArray*) colorsForControlState:(UIControlState)controlState;
@@ -53,7 +43,6 @@ typedef enum {
 - (CGFloat) borderWidthForControlState:(UIControlState)controlState;
 
 - (void) setBorderColor:(UIColor*)borderColor forControlState:(UIControlState)controlState;
-- (UIColor*) borderColorForControlState:(UIControlState)controlState;
 
 - (void) setBorderColors:(NSArray*)borderColor forControlState:(UIControlState)controlState;
 - (NSArray*) borderColorsForControlState:(UIControlState)controlState;

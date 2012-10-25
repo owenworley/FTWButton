@@ -1,5 +1,5 @@
 //
-//  FTWAnimatableGradientButton.m
+//  FTWButton.h
 //  FTW
 //
 //  Created by Soroush Khanlou on 1/26/12.
@@ -27,13 +27,11 @@
 @property (strong, nonatomic) NSMutableDictionary *textShadowOffsets;
 
 @property (strong, nonatomic) NSMutableDictionary *borderWidths;
-@property (strong, nonatomic) NSMutableDictionary *borderColors;
 @property (strong, nonatomic) NSMutableDictionary *borderGradients;
 
 @property (strong, nonatomic) NSMutableDictionary *cornerRadii;
 
 @property (strong, nonatomic) NSMutableDictionary *gradients;
-@property (strong, nonatomic) NSMutableDictionary *backgroundColors;
 @property (strong, nonatomic) NSMutableDictionary *frames;
 
 @property (strong, nonatomic) NSMutableDictionary *shadowColors;
@@ -48,8 +46,8 @@
 @property (strong, nonatomic) NSMutableDictionary *icons;
 
 
-- (id) getValueFromDictionary:(NSDictionary*)dictionary forControlState:(UIControlState)controlState;
-- (void) setValue:(id)value inDictionary:(NSDictionary*)dictionary forControlState:(UIControlState)controlState;
+- (id) getValueFromDictionary:(NSMutableDictionary*)dictionary forControlState:(UIControlState)controlState;
+- (void) setValue:(id)value inDictionary:(NSMutableDictionary*)dictionary forControlState:(UIControlState)controlState;
 
 
 - (void) configureViewForControlState:(UIControlState)controlState;
@@ -68,8 +66,8 @@
 @synthesize label, selectedLabel;
 @synthesize texts;
 @synthesize textColors, textShadowColors, textShadowOffsets, textAlignment;
-@synthesize borderWidths, borderColors, borderGradients, cornerRadii;
-@synthesize gradients, backgroundColors, frames;
+@synthesize borderWidths, borderGradients, cornerRadii;
+@synthesize gradients, frames;
 @synthesize shadowColors, shadowOffsets, shadowRadii, shadowOpacities;
 @synthesize innerShadowColors, innerShadowOffsets, innerShadowRadii;
 @synthesize icons;
@@ -145,9 +143,7 @@
 	
 	
 	
-	backgroundColors = [NSMutableDictionary new];
 	gradients = [NSMutableDictionary new];
-	borderColors = [NSMutableDictionary new];
 	borderGradients = [NSMutableDictionary new];
 	
 	borderWidths = [NSMutableDictionary new];
@@ -301,7 +297,7 @@
 	
 	//set background colors and gradients
 	backgroundLayer.colors =  [self colorsForControlState:controlState];
-	backgroundLayer.backgroundColor = [self backgroundColorForControlState:controlState].CGColor;
+	//	backgroundLayer.backgroundColor = [self backgroundColorForControlState:controlState].CGColor;
 	
 	//set border widths, colors, and gradients
 	if ([self borderWidthForControlState:controlState] > 0) {
@@ -309,10 +305,10 @@
 			borderLayer.colors = [self borderColorsForControlState:controlState];
 			borderLayer.backgroundColor = [UIColor clearColor].CGColor;
 		} else {
-			if ([self borderColorForControlState:controlState]) {
-				borderLayer.backgroundColor = [self borderColorForControlState:controlState].CGColor;
+			if ([self borderColorsForControlState:controlState]) {
+				borderLayer.colors = [self borderColorsForControlState:controlState];
 			} else {
-				borderLayer.backgroundColor = [self backgroundColorForControlState:controlState].CGColor;
+				borderLayer.colors = [self colorsForControlState:controlState];
 			}
 		}
 	}
@@ -403,12 +399,16 @@
 
 #pragma mark - default setter and getter
 
-- (void) setValue:(id)value inDictionary:(NSDictionary*)dictionary forControlState:(UIControlState)controlState {
-	[dictionary setValue:value forKey:[NSString stringWithFormat:@"%d",controlState]];
+- (void) setValue:(id)value inDictionary:(NSMutableDictionary*)dictionary forControlState:(UIControlState)controlState {
+	if (value) {
+		[dictionary setValue:value forKey:[NSString stringWithFormat:@"%d",controlState]];
+	} else {
+		[dictionary removeObjectForKey:[NSString stringWithFormat:@"%d",controlState]];
+	}
 	[self configureViewForControlState:[self currentControlState]];
 }
 
-- (id) getValueFromDictionary:(NSDictionary*)dictionary forControlState:(UIControlState)controlState {
+- (id) getValueFromDictionary:(NSMutableDictionary*)dictionary forControlState:(UIControlState)controlState {
 	if ([dictionary valueForKey:[NSString stringWithFormat:@"%d",controlState]]) {
 		return [dictionary valueForKey:[NSString stringWithFormat:@"%d",controlState]];
 	}
@@ -608,11 +608,7 @@
 #pragma mark background colors
 
 - (void) setBackgroundColor:(UIColor*)color forControlState:(UIControlState)controlState {
-	[self setValue:color inDictionary:backgroundColors forControlState:controlState];
-}
-
-- (UIColor*) backgroundColorForControlState:(UIControlState)controlState {
-	return [self getValueFromDictionary:backgroundColors forControlState:controlState];
+	[self setValue:@[ [color copy], [color copy] ] inDictionary:gradients forControlState:controlState];
 }
 
 - (void) setColors:(NSArray*)colors forControlState:(UIControlState)controlState {
@@ -660,11 +656,7 @@
 
 
 - (void) setBorderColor:(UIColor*)borderColor forControlState:(UIControlState)controlState {
-	[self setValue:borderColor inDictionary:borderColors forControlState:controlState];
-}
-
-- (UIColor*) borderColorForControlState:(UIControlState)controlState {
-	return [self getValueFromDictionary:borderColors forControlState:controlState];
+	[self setValue:@[[borderColor copy], [borderColor copy]] inDictionary:borderGradients forControlState:controlState];
 }
 
 #pragma mark - built in styles
@@ -849,6 +841,7 @@
 		[self setInnerShadowColor:[UIColor colorWithRed:86.0f/255 green:174.0f/255 blue:199.0f/255 alpha:1.0f] forControlState:highlightedState];
 	}
 }
+
 
 
 @end
