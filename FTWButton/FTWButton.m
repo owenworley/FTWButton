@@ -71,6 +71,7 @@
 @synthesize shadowColors, shadowOffsets, shadowRadii, shadowOpacities;
 @synthesize innerShadowColors, innerShadowOffsets, innerShadowRadii;
 @synthesize icons;
+@synthesize iconAlignment, iconPlacement;
 
 
 #pragma mark - init methods
@@ -178,22 +179,65 @@
 	[super layoutSubviews];
 	NSInteger horizontalPadding = 7;
 	NSInteger verticalPadding = 6;
-	
+
+    NSString *text = [self textForControlState:self.state];
+    UIFont *font = self.state == UIControlStateNormal ? label.font : selectedLabel.font;
+    CGSize textSize = [text sizeWithFont:font];
+
 	NSInteger imageSize = 0;
 	if (normalIcon.image != nil) {
 		imageSize = MAX(normalIcon.image.size.height, normalIcon.image.size.width);
 		NSInteger padding = (self.frame.size.height - imageSize)/2;
-		horizontalPadding = padding;
+        horizontalPadding = MAX(5, padding);
 		verticalPadding = padding;
-		normalIcon.layer.frame = CGRectMake(horizontalPadding, verticalPadding, imageSize, imageSize);
-		selectedIcon.layer.frame = CGRectMake(horizontalPadding, verticalPadding, imageSize, imageSize);
+
+        CGFloat iconX = 0;
+        CGFloat iconY = verticalPadding;
+
+        switch (iconPlacement) {
+            case FTWButtonIconPlacementTight:
+                switch (iconAlignment) {
+                    case FTWButtonIconAlignmentLeft:
+                        if (textSize.width > 0) {
+                            iconX = CGRectGetMidX(self.bounds) - textSize.width/2.0 - horizontalPadding - imageSize;
+                        } else {
+                            iconX = CGRectGetMidX(self.bounds) - imageSize/2.0;
+                        }
+                        break;
+                    case FTWButtonIconAlignmentRight:
+                        if (textSize.width > 0) {
+                            iconX = CGRectGetMidX(self.bounds) + textSize.width/2.0 + horizontalPadding;
+                        } else {
+                            iconX = CGRectGetMidX(self.bounds) - imageSize/2.0;
+                        }
+                        break;
+                }
+                break;
+
+            case FTWButtonIconPlacementEdge:
+                switch (iconAlignment) {
+                    case FTWButtonIconAlignmentLeft:
+                        iconX = horizontalPadding;
+                        break;
+                    case FTWButtonIconAlignmentRight:
+                        iconX = CGRectGetWidth(self.bounds) - imageSize - horizontalPadding;
+                        break;
+                }
+                break;
+        }
+
+		normalIcon.layer.frame = CGRectMake(iconX, iconY, imageSize, imageSize);
+		selectedIcon.layer.frame = CGRectMake(iconX, iconY, imageSize, imageSize);
 		imageSize += horizontalPadding;
 	}
-	
-	CGRect labelRect = CGRectMake(horizontalPadding + imageSize, verticalPadding, self.frame.size.width - horizontalPadding*2 - imageSize, self.frame.size.height - verticalPadding*2);
-	
-	label.frame = labelRect;
-	selectedLabel.frame = labelRect;
+
+    CGRect labelRect = self.bounds;
+
+    if (normalIcon != nil && textAlignment != NSTextAlignmentCenter) {
+      labelRect = CGRectMake(horizontalPadding + imageSize, verticalPadding, self.frame.size.width - horizontalPadding*2 - imageSize, self.frame.size.height - verticalPadding*2);
+    }
+
+    label.frame = selectedLabel.frame = labelRect;
 }
 
 - (void) setFrame:(CGRect)aFrame {
@@ -207,8 +251,10 @@
 }
 
 - (void) setTextAlignment:(NSTextAlignment)newTextAlignment {
+    textAlignment = newTextAlignment;
 	label.textAlignment = newTextAlignment;
 	selectedLabel.textAlignment = newTextAlignment;
+    [self setNeedsLayout];
 }
 
 - (NSTextAlignment) textAlignment {

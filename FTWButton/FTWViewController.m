@@ -134,7 +134,49 @@
 	button6.textAlignment = NSTextAlignmentLeft;
 	[button6 addTarget:self action:@selector(buttonTapped:) forControlEvents:UIControlEventTouchUpInside];
 	[self.view addSubview:button6];
-	
+
+    FTWButton *button7 = [FTWButton new];
+    button7.frame = CGRectMake(40, 365, 240, 30);
+    [button7 addBlueStyleForState:UIControlStateNormal];
+    [button7 setText:@"Left Edge" forControlState:UIControlStateNormal];
+    [button7 setIcon:[UIImage imageNamed:@"planet"] forControlState:UIControlStateNormal];
+    [self.view addSubview:button7];
+
+    FTWButton *button8 = [FTWButton new];
+    button8.frame = CGRectMake(40, 400, 240, 30);
+    [button8 addBlueStyleForState:UIControlStateNormal];
+    [button8 setIconAlignment:FTWButtonIconAlignmentRight];
+    [button8 setIconPlacement:FTWButtonIconPlacementEdge];
+    [button8 setText:@"Right Edge" forControlState:UIControlStateNormal];
+    [button8 setIcon:[UIImage imageNamed:@"planet"] forControlState:UIControlStateNormal];
+    [self.view addSubview:button8];
+
+    FTWButton *button9 = [FTWButton new];
+    button9.frame = CGRectMake(40, 435, 240, 30);
+    [button9 addBlueStyleForState:UIControlStateNormal];
+    [button9 setIconAlignment:FTWButtonIconAlignmentLeft];
+    [button9 setIconPlacement:FTWButtonIconPlacementTight];
+    [button9 setText:@"Left Tight" forControlState:UIControlStateNormal];
+    [button9 setIcon:[UIImage imageNamed:@"planet"] forControlState:UIControlStateNormal];
+    button9.textAlignment = NSTextAlignmentCenter;
+    [self.view addSubview:button9];
+
+    FTWButton *button10 = [FTWButton new];
+    button10.frame = CGRectMake(40, 470, 240, 30);
+    [button10 addBlueStyleForState:UIControlStateNormal];
+    [button10 setIconAlignment:FTWButtonIconAlignmentRight];
+    [button10 setIconPlacement:FTWButtonIconPlacementTight];
+    [button10 setText:@"Right Tight" forControlState:UIControlStateNormal];
+    [button10 setIcon:[UIImage imageNamed:@"planet"] forControlState:UIControlStateNormal];
+    [self.view addSubview:button10];
+
+    // No text on this one.
+    FTWButton *button11 = [FTWButton new];
+    button11.frame = CGRectMake(40, 505, 240, 30);
+    [button11 addBlueStyleForState:UIControlStateNormal];
+    [button11 setIconPlacement:FTWButtonIconPlacementTight];
+    [button11 setIcon:[UIImage imageNamed:@"planet"] forControlState:UIControlStateNormal];
+    [self.view addSubview:button11];
 }
 
 - (IBAction) buttonTapped:(id)sender {
