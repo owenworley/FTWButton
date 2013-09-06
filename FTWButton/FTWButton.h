@@ -13,9 +13,21 @@
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
 
+typedef enum {
+  FTWButtonIconAlignmentLeft,
+  FTWButtonIconAlignmentRight
+} FTWButtonIconAlignment;
+
+typedef enum {
+  FTWButtonIconPlacementEdge,
+  FTWButtonIconPlacementTight
+} FTWButtonIconPlacement;
+
 @interface FTWButton : UIControl
 
 @property (nonatomic, assign) NSTextAlignment textAlignment;
+@property (nonatomic, assign) FTWButtonIconAlignment iconAlignment;
+@property (nonatomic, assign) FTWButtonIconPlacement iconPlacement;
 
 //a few default styles
 - (void) addDisabledStyleForState:(UIControlState)state;
