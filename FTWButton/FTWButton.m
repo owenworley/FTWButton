@@ -17,6 +17,7 @@
 
 @property (strong, nonatomic) UIImageView *normalIcon;
 @property (strong, nonatomic) UIImageView *selectedIcon;
+@property (strong, nonatomic) UIImageView *highlightedIcon;
 
 @property (strong, nonatomic) UILabel *label;
 @property (strong, nonatomic) UILabel *selectedLabel;
@@ -62,7 +63,7 @@
 @implementation FTWButton
 
 @synthesize borderLayer, backgroundLayer;
-@synthesize normalIcon, selectedIcon;
+@synthesize normalIcon, selectedIcon, highlightedIcon;
 @synthesize label, selectedLabel;
 @synthesize texts;
 @synthesize textColors, textShadowColors, textShadowOffsets, textAlignment;
@@ -124,8 +125,10 @@
 	
 	normalIcon = [[UIImageView alloc] initWithFrame:CGRectZero];
 	selectedIcon = [[UIImageView alloc] initWithFrame:CGRectZero];
+    highlightedIcon = [[UIImageView alloc] initWithFrame:CGRectZero];
 	normalIcon.contentMode = UIViewContentModeScaleAspectFit;
-	selectedIcon.contentMode = UIViewContentModeScaleAspectFit;
+	selectedIcon.contentMode = normalIcon.contentMode;
+    highlightedIcon.contentMode = normalIcon.contentMode;
 	
 	label.lineBreakMode = NSLineBreakByClipping;
 	selectedLabel.lineBreakMode = NSLineBreakByClipping;
@@ -133,6 +136,7 @@
 	
 	[self addSubview:normalIcon];
 	[self addSubview:selectedIcon];
+    [self addSubview:highlightedIcon];
 	
 	backgroundLayer = [SKInnerShadowLayer layer];
 	[self.layer insertSublayer:backgroundLayer atIndex:0];
@@ -227,7 +231,8 @@
         }
 
 		normalIcon.layer.frame = CGRectMake(iconX, iconY, imageSize, imageSize);
-		selectedIcon.layer.frame = CGRectMake(iconX, iconY, imageSize, imageSize);
+		selectedIcon.layer.frame = normalIcon.layer.frame;
+        highlightedIcon.layer.frame = normalIcon.layer.frame;
 		imageSize += horizontalPadding;
 	}
 
@@ -415,15 +420,20 @@
 	}
 	
 	CGFloat alpha = 1.0f;
+    CGFloat alphaHighlight = 0.0f;
 	
 	//show the selected icon and label, if necessary
 	if (self.selected) {
 		alpha = 0.0f;
 	}
+    if (self.highlighted) {
+        alphaHighlight = 1.0f;
+    }
 	label.alpha = alpha;
-	normalIcon.alpha = alpha;
+	normalIcon.alpha = alpha - alphaHighlight;
 	selectedIcon.alpha = 1.0f - alpha;
 	selectedLabel.alpha = 1.0f - alpha;
+    highlightedIcon.alpha = alphaHighlight;
 }
 
 
@@ -635,12 +645,14 @@
 #pragma mark images
 
 - (void) setIcon:(UIImage*)icon forControlState:(UIControlState)controlState {
-	//this is just wrong - what if you set a highlightd image?
 	if (controlState == UIControlStateNormal) {
 		normalIcon.image = icon;
 	}
 	if (controlState & UIControlStateSelected) {
 		selectedIcon.image = icon;
+	}
+    if (controlState & UIControlStateHighlighted) {
+		highlightedIcon.image = icon;
 	}
 	[self setValue:icons inDictionary:icons forControlState:controlState];
 	[self setNeedsLayout];
