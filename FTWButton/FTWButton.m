@@ -186,7 +186,7 @@
 
     NSString *text = [self textForControlState:self.state];
     UIFont *font = self.state == UIControlStateNormal ? label.font : selectedLabel.font;
-    CGSize textSize = [text sizeWithFont:font];
+    CGSize textSize = [self sizeOfText:text font:font];
 
 	NSInteger imageSize = 0;
 	if (normalIcon.image != nil) {
@@ -243,6 +243,24 @@
     }
 
     label.frame = selectedLabel.frame = labelRect;
+}
+
+- (CGSize)sizeOfText:(NSString *)text font:(UIFont *)font {
+    CGSize textSize = CGSizeZero;
+#if __IPHONE_OS_VERSION_MIN_REQUIRED >= __IPHONE_7_0
+    if (font) {
+        textSize = [text sizeWithAttributes:@{ NSFontAttributeName: font }];
+    }
+#else
+    textSize = [text sizeWithFont:font];
+#endif
+    return [self integralSize:textSize];
+}
+
+- (CGSize)integralSize:(CGSize)size {
+    CGRect rect = { CGPointZero, size };
+    rect = CGRectIntegral(rect);
+    return rect.size;
 }
 
 - (void) setFrame:(CGRect)aFrame {
@@ -457,25 +475,25 @@
 
 - (void) setValue:(id)value inDictionary:(NSMutableDictionary*)dictionary forControlState:(UIControlState)controlState {
 	if (value) {
-		[dictionary setValue:value forKey:[NSString stringWithFormat:@"%d",controlState]];
+		[dictionary setValue:value forKey:[NSString stringWithFormat:@"%lu", (unsigned long)controlState]];
 	} else {
-		[dictionary removeObjectForKey:[NSString stringWithFormat:@"%d",controlState]];
+		[dictionary removeObjectForKey:[NSString stringWithFormat:@"%lu", (unsigned long)controlState]];
 	}
 	[self configureViewForControlState:[self currentControlState]];
 }
 
 - (id) getValueFromDictionary:(NSMutableDictionary*)dictionary forControlState:(UIControlState)controlState {
-	if ([dictionary valueForKey:[NSString stringWithFormat:@"%d",controlState]]) {
-		return [dictionary valueForKey:[NSString stringWithFormat:@"%d",controlState]];
+	if ([dictionary valueForKey:[NSString stringWithFormat:@"%lu", (unsigned long)controlState]]) {
+		return [dictionary valueForKey:[NSString stringWithFormat:@"%lu", (unsigned long)controlState]];
 	}
 	
 	
-	if ((controlState & UIControlStateSelected) && [dictionary valueForKey:[NSString stringWithFormat:@"%d",UIControlStateSelected]]) {
-		return [dictionary valueForKey:[NSString stringWithFormat:@"%d",UIControlStateSelected]];
-	} else if ((controlState & UIControlStateHighlighted) && [dictionary valueForKey:[NSString stringWithFormat:@"%d", UIControlStateHighlighted]]) {
-		return [dictionary valueForKey:[NSString stringWithFormat:@"%d", UIControlStateHighlighted]];
+	if ((controlState & UIControlStateSelected) && [dictionary valueForKey:[NSString stringWithFormat:@"%lu", (unsigned long)UIControlStateSelected]]) {
+		return [dictionary valueForKey:[NSString stringWithFormat:@"%lu", (unsigned long)UIControlStateSelected]];
+	} else if ((controlState & UIControlStateHighlighted) && [dictionary valueForKey:[NSString stringWithFormat:@"%lu", (unsigned long)UIControlStateHighlighted]]) {
+		return [dictionary valueForKey:[NSString stringWithFormat:@"%lu", (unsigned long)UIControlStateHighlighted]];
 	} else {
-		return [dictionary valueForKey:[NSString stringWithFormat:@"%d",UIControlStateNormal]];
+		return [dictionary valueForKey:[NSString stringWithFormat:@"%lu", (unsigned long)UIControlStateNormal]];
 	}
 }
 
@@ -491,7 +509,7 @@
 	if (controlState & UIControlStateSelected) {
 		selectedLabel.textColor = newTextColor;
 	}
-	[textColors setValue:newTextColor forKey:[NSString stringWithFormat:@"%d",controlState]];
+	[textColors setValue:newTextColor forKey:[NSString stringWithFormat:@"%lu", (unsigned long)controlState]];
 	[self setValue:newTextColor inDictionary:textColors forControlState:controlState];
 }
 
@@ -634,7 +652,7 @@
 }
 
 - (void) setInnerShadowRadius:(CGFloat)shadowRadius forControlState:(UIControlState)controlState {
-	[innerShadowRadii setValue:[NSNumber numberWithFloat:shadowRadius] forKey:[NSString stringWithFormat:@"%d",controlState]];
+	[innerShadowRadii setValue:[NSNumber numberWithFloat:shadowRadius] forKey:[NSString stringWithFormat:@"%lu", (unsigned long)controlState]];
 	[self setValue:[NSNumber numberWithFloat:shadowRadius] inDictionary:innerShadowRadii forControlState:controlState];
 }
 

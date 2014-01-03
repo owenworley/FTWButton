@@ -84,7 +84,6 @@
 		1A88DADC16288DD400CC9EDC = {
 			isa = PBXGroup;
 			children = (
-				1A88DB141628A63A00CC9EDC /* QuartzCore.framework */,
 				1A88DAF116288DD400CC9EDC /* FTWButton */,
 				1A88DAEA16288DD400CC9EDC /* Frameworks */,
 				1A88DAE816288DD400CC9EDC /* Products */,
@@ -102,6 +101,7 @@
 		1A88DAEA16288DD400CC9EDC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1A88DB141628A63A00CC9EDC /* QuartzCore.framework */,
 				1A88DAEB16288DD400CC9EDC /* UIKit.framework */,
 				1A88DAED16288DD400CC9EDC /* Foundation.framework */,
 				1A88DAEF16288DD400CC9EDC /* CoreGraphics.framework */,
@@ -295,6 +295,7 @@
 		1A88DB0C16288DD500CC9EDC /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "FTWButton/FTWButton-Prefix.pch";
 				INFOPLIST_FILE = "FTWButton/FTWButton-Info.plist";
@@ -306,6 +307,7 @@
 		1A88DB0D16288DD500CC9EDC /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "FTWButton/FTWButton-Prefix.pch";
 				INFOPLIST_FILE = "FTWButton/FTWButton-Info.plist";
