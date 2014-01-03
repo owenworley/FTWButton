@@ -186,7 +186,7 @@
 
     NSString *text = [self textForControlState:self.state];
     UIFont *font = self.state == UIControlStateNormal ? label.font : selectedLabel.font;
-    CGSize textSize = [text sizeWithFont:font];
+    CGSize textSize = [self sizeOfText:text font:font];
 
 	NSInteger imageSize = 0;
 	if (normalIcon.image != nil) {
@@ -243,6 +243,24 @@
     }
 
     label.frame = selectedLabel.frame = labelRect;
+}
+
+- (CGSize)sizeOfText:(NSString *)text font:(UIFont *)font {
+    CGSize textSize = CGSizeZero;
+#if __IPHONE_OS_VERSION_MIN_REQUIRED >= __IPHONE_7_0
+    if (font) {
+        textSize = [text sizeWithAttributes:@{ NSFontAttributeName: font }];
+    }
+#else
+    textSize = [text sizeWithFont:font];
+#endif
+    return [self integralSize:textSize];
+}
+
+- (CGSize)integralSize:(CGSize)size {
+    CGRect rect = { CGPointZero, size };
+    rect = CGRectIntegral(rect);
+    return rect.size;
 }
 
 - (void) setFrame:(CGRect)aFrame {
