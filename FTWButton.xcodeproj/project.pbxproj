@@ -295,6 +295,7 @@
 		1A88DB0C16288DD500CC9EDC /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "FTWButton/FTWButton-Prefix.pch";
 				INFOPLIST_FILE = "FTWButton/FTWButton-Info.plist";
@@ -306,6 +307,7 @@
 		1A88DB0D16288DD500CC9EDC /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "FTWButton/FTWButton-Prefix.pch";
 				INFOPLIST_FILE = "FTWButton/FTWButton-Info.plist";
