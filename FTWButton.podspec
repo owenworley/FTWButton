@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name      = 'FTWButton'
-  s.version   = '2.0.0'
+  s.version   = '2.0.1'
   s.platform  = :ios
   s.summary   = 'A UIControl subclass with easy color, gradient, text, and icon properties.'
   s.description   = 'FTWButton is a UIControl subclass that lets you easily set color, gradient, text, '\
@@ -19,7 +19,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     LICENSE
   }
   s.author    = { 'Soroush Khanlou' =>  'http://khanlou.com/' }
-  s.source    = { :git => 'https://github.com/fictorial/FTWButton.git', :tag => "v#{s.version}" }
+  s.source    = { :git => 'https://github.com/FTW/FTWButton.git', :tag => "v#{s.version}" }
   s.source_files  = 'FTWButton/FTWButton.{h,m}'
   s.frameworks    = 'QuartzCore'
   s.dependency    'SKInnerShadowLayer', '~> 1.1'
