@@ -672,7 +672,7 @@
     if (controlState & UIControlStateHighlighted) {
 		highlightedIcon.image = icon;
 	}
-	[self setValue:icons inDictionary:icons forControlState:controlState];
+	[self setValue:icon inDictionary:icons forControlState:controlState];
 	[self setNeedsLayout];
 }
 

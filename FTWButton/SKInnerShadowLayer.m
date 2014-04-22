@@ -136,6 +136,7 @@
 	
 	CGContextSetFillColorWithColor(context, innerShadowColorWithMultipliedAlpha);
 	CGContextSetShadowWithColor(context, self.innerShadowOffset, self.innerShadowRadius, innerShadowColorWithMultipliedAlpha);
+    CGColorRelease(innerShadowColorWithMultipliedAlpha);
 	
 	CGContextAddPath(context, outer);
 	CGContextEOFillPath(context);
