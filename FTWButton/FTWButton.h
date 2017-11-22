@@ -80,6 +80,7 @@ typedef enum {
 
 - (void) setFont:(UIFont *)font;
 
+- (void) setNumberOfLines:(NSInteger)numberOfLines;
 
 //shadow
 - (void) setShadowColor:(UIColor*)shadowColor forControlState:(UIControlState)controlState;

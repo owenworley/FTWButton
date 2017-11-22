@@ -26,6 +26,7 @@
 @property (strong, nonatomic) NSMutableDictionary *textColors;
 @property (strong, nonatomic) NSMutableDictionary *textShadowColors;
 @property (strong, nonatomic) NSMutableDictionary *textShadowOffsets;
+@property (assign, nonatomic) NSInteger numberOfLines;
 
 @property (strong, nonatomic) NSMutableDictionary *borderWidths;
 @property (strong, nonatomic) NSMutableDictionary *borderGradients;
@@ -271,6 +272,12 @@
 - (void) setFrameInternal:(CGRect)aFrame {
 	[super setFrame:aFrame];
 	
+}
+
+- (void) setNumberOfLines:(NSInteger)numberOfLines {
+    _numberOfLines = numberOfLines;
+    label.numberOfLines = numberOfLines;
+    selectedLabel.numberOfLines = numberOfLines;
 }
 
 - (void) setTextAlignment:(NSTextAlignment)newTextAlignment {
